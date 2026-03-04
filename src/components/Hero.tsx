@@ -1,6 +1,6 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { FaWhatsapp, FaArrowDown } from 'react-icons/fa';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { FaWhatsapp, FaArrowDown, FaCalendarAlt, FaShieldAlt, FaUtensils } from 'react-icons/fa';
 
 const WHATSAPP_NUMBER = '77784399162';
 
@@ -13,10 +13,18 @@ const images = [
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const [current, setCurrent] = useState(0);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
   const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
@@ -26,13 +34,18 @@ export default function Hero() {
   return (
     <section className="hero" ref={ref}>
       <motion.div className="hero__bg" style={{ y: bgY }}>
-        {images.map((src, i) => (
-          <div
-            key={i}
+        <AnimatePresence mode="popLayout">
+          <motion.img
+            key={current}
+            src={images[current]}
+            alt=""
             className="hero__bg-img"
-            style={{ backgroundImage: `url(${src})` }}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
           />
-        ))}
+        </AnimatePresence>
       </motion.div>
       <motion.div className="hero__overlay" style={{ opacity: overlayOpacity }} />
 
@@ -106,20 +119,22 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1.1 }}
         >
           {[
-            { num: 'с 2017', label: 'года работаем' },
-            { num: '24/7', label: 'безопасность' },
-            { num: '5-разовое', label: 'питание' },
+            { icon: <FaCalendarAlt size={18} />, num: 'с 2017', label: 'года работаем' },
+            { icon: <FaShieldAlt size={18} />, num: '24/7', label: 'безопасность' },
+            { icon: <FaUtensils size={18} />, num: '5-разовое', label: 'питание' },
           ].map((stat, i) => (
             <motion.div
               key={i}
               className="hero__stat"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 1.2 + i * 0.15 }}
             >
-              <span className="hero__stat-number">{stat.num}</span>
-              <span className="hero__stat-label">{stat.label}</span>
-              {i < 2 && <div className="hero__stat-divider" />}
+              <span className="hero__stat-icon">{stat.icon}</span>
+              <div className="hero__stat-text">
+                <span className="hero__stat-number">{stat.num}</span>
+                <span className="hero__stat-label">{stat.label}</span>
+              </div>
             </motion.div>
           ))}
         </motion.div>

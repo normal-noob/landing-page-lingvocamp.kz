@@ -71,13 +71,23 @@ export default function Header() {
           </a>
         </div>
 
-        <button
-          className="header__burger"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Меню"
-        >
-          {mobileOpen ? <HiX size={28} /> : <HiMenu size={28} />}
-        </button>
+        <div className="header__mobile-right">
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Здравствуйте! Хочу узнать подробнее о LingvoCamp.')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header__mobile-wa"
+          >
+            <FaWhatsapp size={20} />
+          </a>
+          <button
+            className="header__burger"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Меню"
+          >
+            {mobileOpen ? <HiX size={26} /> : <HiMenu size={26} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>

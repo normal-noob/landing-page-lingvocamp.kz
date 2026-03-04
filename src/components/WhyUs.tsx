@@ -83,8 +83,8 @@ export default function WhyUs() {
               variants={cardVariants}
               whileHover={{
                 y: -8,
-                boxShadow: '0 20px 40px rgba(26, 107, 60, 0.12)',
-                borderColor: 'rgba(45, 154, 87, 0.4)',
+                boxShadow: '0 20px 40px rgba(124, 58, 237, 0.15)',
+                borderColor: 'rgba(167, 139, 250, 0.5)',
               }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
