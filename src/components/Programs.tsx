@@ -1,193 +1,243 @@
 import { motion } from 'framer-motion';
-import { FaWhatsapp, FaCalendarAlt, FaPercent } from 'react-icons/fa';
+import {
+  FaWhatsapp,
+  FaDownload,
+  FaPercent,
+  FaUtensils,
+  FaBed,
+  FaShieldAlt,
+  FaBookOpen,
+  FaTrain,
+  FaUsers,
+} from 'react-icons/fa';
 
 const WHATSAPP_NUMBER = '77784399162';
+const PDF_URL = '/letnyaya-programma-2026.pdf';
 
-const springProgram = {
-  title: 'Весенняя смена',
-  dates: '21.03 – 29.03.2026',
-  duration: '9 дней / 8 ночей',
-  image: '/images/program-spring.jpg',
-  badge: 'Ближайшая смена',
-  badgeColor: '#ef4444',
-  activities: [
-    '🇬🇧 Английский язык с носителями языка и местными преподавателями',
-    '🎤 Singing Club — разговорная практика через песни',
-    '🌷 Празднование Наурыза (национальный стол, плов на костре, baursak party)',
-    '🇰🇿 Национальные казахские игры',
-    '🐏 Сухое валяние из шерсти игрушек и брелков',
-    '🐎 Катание на лошадях',
-    '🍿 Киновечер на английском языке',
-    '🎨 Творческие мастер-классы',
-    '🍕 Кулинарный мастер-класс',
-    '💃 Тематические вечера и дискотеки',
-    '🍡 Маршмеллоу на костре + горячий шоколад',
-    '🔥 Песни у костра',
-    '🕺 Вожатская программа',
-    '🚌 Экскурсия в Боровое',
-    '🕵️‍♀️ Квестология — командные игры и квесты',
-  ],
-  includes: [
-    '🚝 Трансфер: Астана – лагерь – Астана',
-    '🥘 5-разовое питание',
-    '🏘 Проживание',
-    '🥗 Завтраки в формате «шведский стол»',
-  ],
+type Session = {
+  num: number;
+  theme: string;
+  dates: string;
+  price: string;
+  gold?: boolean;
 };
 
-const summerProgram = {
-  title: 'Летние смены 2026',
-  dates: 'Июнь — Август 2026',
-  duration: 'Несколько смен',
-  image: '/images/program-summer.jpg',
-  badge: 'Скидка 15% до 01.04',
-  badgeColor: '#f59e0b',
-  activities: [
-    '🇬🇧 Английский 3 ак. часа в день с носителями языка',
-    '🎭 Ежедневная развлекательная программа от вожатых',
-    '🤝 Тренинги на сплочение команды',
-    '🎨 Кулинарные и творческие мастер-классы',
-    '🎤 Вечерние мероприятия с выступлениями детей',
-    '💼 Бизнес-игра',
-    '🎥 Киновечер',
-    '🚌 Экскурсия в Боровое',
-    '🏊‍♂️ Бассейн (по погоде)',
-    '🫧 Пенная вечеринка',
-    '🎨 Фестиваль красок Холи',
-    '🏇 Катание на лошадях',
-    '🪁 Фестиваль воздушных змеев',
-    '🔥 Вечер у костра с маршмеллоу',
-    '🎆 Завершающий салют смены',
-  ],
-  includes: [
-    '🚝 Трансфер: Астана – лагерь – Астана',
-    '🍽️ 5-разовое питание',
-    '🎯 Полная программа лагеря',
-    '🧢 Фирменная кепка LingvoCamp',
-    '📸 Ежедневный фото- и видеоотчёт в Telegram-канале',
-  ],
+const sessions: Session[] = [
+  { num: 1, theme: 'Sport & Health', dates: '3 – 12 июня 2026', price: '240 000 ₸' },
+  { num: 2, theme: 'Superheroes University', dates: '13 – 22 июня 2026', price: '260 000 ₸' },
+  { num: 3, theme: 'Festival of Nations', dates: '23 июня – 2 июля 2026', price: '289 000 ₸' },
+  { num: 4, theme: 'Medieval Order', dates: '3 – 12 июля 2026', price: '289 000 ₸' },
+  { num: 5, theme: 'Detective Time', dates: '13 – 22 июля 2026', price: '289 000 ₸' },
+  { num: 6, theme: "You're Creative", dates: '23 июля – 1 августа 2026', price: '289 000 ₸' },
+  { num: 7, theme: 'Media and Blogging', dates: '2 – 11 августа 2026', price: '260 000 ₸' },
+  { num: 8, theme: 'Great Personalities', dates: '12 – 21 августа 2026', price: '240 000 ₸', gold: true },
+];
+
+const facts = [
+  { value: '2016', label: 'Год основания' },
+  { value: '9 000+', label: 'Детей у нас побывало' },
+  { value: '8–17', label: 'Возраст детей' },
+  { value: '3.5 га', label: 'Территория лагеря' },
+];
+
+const features = [
+  {
+    icon: FaBookOpen,
+    title: 'Английский с носителями',
+    text: '3 урока по 45 минут каждый день: Grammar, Speaking, Vocabulary',
+  },
+  {
+    icon: FaBed,
+    title: 'Уютные домики',
+    text: 'Отапливаемые комнаты на 4–6 человек с собственным санузлом и душем',
+  },
+  {
+    icon: FaUtensils,
+    title: '5-разовое питание',
+    text: 'Завтрак «шведский стол», обед, полдник, ужин, поздний ужин',
+  },
+  {
+    icon: FaShieldAlt,
+    title: 'Безопасность 24/7',
+    text: 'Охрана, видеонаблюдение, медработник, 1 вожатый на 10 детей',
+  },
+  {
+    icon: FaTrain,
+    title: 'Трансфер из Астаны',
+    text: '30 минут от вокзала Щучинска до лагеря, электропоездом — удобно и безопасно',
+  },
+  {
+    icon: FaUsers,
+    title: '8 тематических смен',
+    text: 'От Sport & Health до Great Personalities — каждая смена уникальна',
+  },
+];
+
+const discounts = [
+  { value: '10%', text: 'на первую смену' },
+  { value: '10%', text: 'если двое детей из одной семьи' },
+];
+
+const fadeIn = {
+  initial: { opacity: 0, y: 30, filter: 'blur(6px)' },
+  whileInView: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  viewport: { once: true, amount: 0.2 },
 };
-
-function ProgramCard({
-  program,
-  index,
-}: {
-  program: typeof summerProgram;
-  index: number;
-}) {
-  const whatsappText = encodeURIComponent(
-    `Здравствуйте! Хочу записать ребёнка на "${program.title}" (${program.dates}). Расскажите подробнее, пожалуйста!`
-  );
-
-  return (
-    <motion.div
-      className="program-card"
-      initial={{ opacity: 0, y: 50, filter: 'blur(6px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: index * 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{ y: -6 }}
-    >
-      <div className="program-card__image-wrap">
-        <motion.img
-          src={program.image}
-          alt={program.title}
-          className="program-card__image"
-          whileHover={{ scale: 1.06 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        />
-        <motion.span
-          className="program-card__badge"
-          style={{ background: program.badgeColor }}
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 400, damping: 15, delay: 0.3 + index * 0.2 }}
-        >
-          {program.badge}
-        </motion.span>
-      </div>
-
-      <div className="program-card__body">
-        <h3 className="program-card__title">{program.title}</h3>
-
-        <div className="program-card__meta">
-          <span className="program-card__meta-item">
-            <FaCalendarAlt size={14} /> {program.dates}
-          </span>
-          <span className="program-card__meta-item">{program.duration}</span>
-        </div>
-
-        <div className="program-card__section">
-          <h4 className="program-card__section-title">Программа</h4>
-          <ul className="program-card__list">
-            {program.activities.map((a, i) => (
-              <li key={i} className="program-card__list-item">{a}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="program-card__section">
-          <h4 className="program-card__section-title">В стоимость входит</h4>
-          <ul className="program-card__list program-card__list--includes">
-            {program.includes.map((item, i) => (
-              <li key={i} className="program-card__list-item">{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <motion.a
-          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-whatsapp program-card__cta"
-          whileHover={{ scale: 1.03, y: -2 }}
-          whileTap={{ scale: 0.97 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-        >
-          <FaWhatsapp size={20} />
-          Записаться
-        </motion.a>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function Programs() {
+  const whatsappText = encodeURIComponent(
+    'Здравствуйте! Хочу записать ребёнка на летнюю смену LingvoCamp 2026. Расскажите подробнее, пожалуйста!'
+  );
+
   return (
     <section id="programs" className="programs">
       <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
+        <motion.div {...fadeIn} transition={{ duration: 0.7 }}>
           <h2 className="section-title">
             Наши <span className="highlight">программы</span>
           </h2>
           <p className="section-subtitle">
-            Выберите подходящую смену и подарите ребёнку незабываемые каникулы
+            Летние смены 2026 в Боровом — 8 тематических смен по 10 дней с английским языком
           </p>
         </motion.div>
 
         <motion.div
           className="programs__early-bird"
-          initial={{ opacity: 0, scale: 0.9, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, scale: 0.92, filter: 'blur(4px)' }}
           whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <FaPercent size={20} />
           <span>
-            <strong>Раннее бронирование на лето!</strong> Скидка 15% при оплате до 1 апреля 2026 г.
+            <strong>Раннее бронирование!</strong> Скидка 15% при оплате до 1 апреля 2026 г.
           </span>
         </motion.div>
 
-        <div className="programs__grid">
-          <ProgramCard program={springProgram as typeof summerProgram} index={0} />
-          <ProgramCard program={summerProgram} index={1} />
+        <motion.div
+          className="programs__facts"
+          {...fadeIn}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          {facts.map((f, i) => (
+            <motion.div
+              key={f.label}
+              className="program-fact"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+            >
+              <span className="program-fact__value">{f.value}</span>
+              <span className="program-fact__label">{f.label}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.h3 className="programs__sub" {...fadeIn} transition={{ duration: 0.6 }}>
+          Смены и стоимость
+        </motion.h3>
+        <div className="program-sessions">
+          {sessions.map((s, i) => (
+            <motion.div
+              key={s.num}
+              className={`session-card${s.gold ? ' session-card--gold' : ''}`}
+              initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+              whileHover={{ y: -4 }}
+            >
+              <div className="session-card__head">
+                <span className="session-card__num">
+                  {s.gold ? 'GOLD SEASON' : `Смена ${s.num}`}
+                </span>
+                <span className="session-card__theme">{s.theme}</span>
+              </div>
+              <div className="session-card__body">
+                <span className="session-card__dates">{s.dates}</span>
+                <span className="session-card__price">{s.price}</span>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        <motion.h3 className="programs__sub" {...fadeIn} transition={{ duration: 0.6 }}>
+          Что входит в программу
+        </motion.h3>
+        <div className="program-features">
+          {features.map((f, i) => {
+            const Icon = f.icon;
+            return (
+              <motion.div
+                key={f.title}
+                className="program-feature"
+                initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }}
+                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                whileHover={{ y: -4 }}
+              >
+                <div className="program-feature__icon">
+                  <Icon size={24} />
+                </div>
+                <h4 className="program-feature__title">{f.title}</h4>
+                <p className="program-feature__text">{f.text}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <motion.div className="programs__discounts" {...fadeIn} transition={{ duration: 0.6 }}>
+          <h3 className="programs__sub programs__sub--inline">Дополнительные скидки</h3>
+          <div className="discount-row">
+            {discounts.map((d, i) => (
+              <motion.div
+                key={i}
+                className="discount-card"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <span className="discount-card__value">{d.value}</span>
+                <span className="discount-card__text">{d.text}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="programs__cta"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.a
+            href={PDF_URL}
+            download
+            className="btn btn-outline programs__download"
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
+            <FaDownload size={18} />
+            Скачать презентацию (PDF)
+          </motion.a>
+          <motion.a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-whatsapp"
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
+            <FaWhatsapp size={20} />
+            Записаться на смену
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );
